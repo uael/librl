@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   librl.h                                            :+:      :+:    :+:   */
+/*   rl.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alucas- <alucas-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,20 +10,53 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBRL_H
-# define LIBRL_H
+#ifndef RL_H
+# define RL_H
 
-# include <libft.h>
+# include <termios.h>
+# include "librl.h"
 
-struct s_rl;
+# define RL_MAX_LINE (4096)
+# ifndef TTY
+#  define TTY struct termios
+# endif
 
-extern int	rl_ctor(struct s_rl *self, int ifd, int ofd, t_bool ml);
-extern void	rl_dtor(struct s_rl *self);
+typedef TTY		t_termios;
 
-extern int	rl_hist_load(struct s_rl *self, char const *filename);
-extern int	rl_hist_save(struct s_rl *self, char const *filename);
+typedef enum	e_rl_mode
+{
+	RL_OFF,
+	RL_NOTTY,
+	RL_INSERT,
+	RL_VISUAL
+}				t_rl_mode;
 
-extern char	*rl_readline(struct s_rl *self, char const *prompt);
-extern char	*rl_readnext(struct s_rl *self, char const *prompt);
+typedef struct	s_rl_hist
+{
+	char		**buf;
+	size_t		len;
+	size_t		max;
+	size_t		idx;
+	int8_t		search;
+}				t_rl_hist;
+
+typedef struct	s_rl
+{
+	t_rl_mode	mode;
+	t_termios	raw;
+	t_termios	orig;
+	int			ifd;
+	int			ofd;
+	char		*buf;
+	size_t		buflen;
+	size_t		len;
+	const char	*prompt;
+	size_t		plen;
+	size_t		pos;
+	int			cols;
+	uint8_t		ml;
+	t_rl_hist	hist;
+}				t_rl;
+
 
 #endif
