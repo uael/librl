@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   edit/ctrl.c                                        :+:      :+:    :+:   */
+/*   edit/utf8.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alucas- <alucas-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,30 +10,35 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "edit.h"
-#include "visual.h"
-#include "read.h"
+#include "../edit.h"
 
-inline int	rl_signalc(void)
-{
-	g_eln->idx = 0;
-	g_eln->str.len = 0;
-	*g_eln->str.buf = '\0';
-	ft_write(STDOUT_FILENO, "^C\n", 3);
-	rl_editprint();
-	return (YEP);
-}
+#define UNI "\xe2\x9d\xaf"
 
-inline int	rl_signald(void)
+inline int	rl_wstrlen(char *str)
 {
-	if (g_eln->str.len)
+	int i;
+	int ix;
+	int q;
+
+	q = 0;
+	i = 0;
+	ix = (int)ft_strlen(str);
+	while (i < ix)
 	{
-		if (g_mode == RL_VISUAL)
-			return (rl_visualdelete());
-		return (YEP);
+		++q;
+		if (!ft_strncmp("\033[32m", str + i, sizeof("\033[32m") - 1) &&
+			(i += sizeof("\033[32m") - 1))
+			--q;
+		else if (!ft_strncmp("\033[31m", str + i, sizeof("\033[31m") - 1) &&
+			(i += sizeof("\033[31m") - 1))
+			--q;
+		else if (!ft_strncmp("\033[0m", str + i, sizeof("\033[0m") - 1) &&
+			(i += sizeof("\033[0m") - 1))
+			--q;
+		else if (!ft_strncmp(UNI, str + i, sizeof(UNI) - 1))
+			i += sizeof(UNI) - 1;
+		else
+			++i;
 	}
-	ft_sdsmpush(&g_eln->str, "exit", 4);
-	rl_editprint();
-	ft_write(STDOUT_FILENO, "\n", 1);
-	return (RL_EXIT);
+	return (q);
 }
