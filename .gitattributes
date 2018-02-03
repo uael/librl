@@ -1,0 +1,9 @@
+*.h linguist-language=C
+*.c linguist-language=C
+auteur export-ignore
+/test export-ignore
+/vendor export-ignore
+.gitattributes export-ignore
+.gitignore export-ignore
+.travis.yml export-ignore
+appveyor.yml export-ignore

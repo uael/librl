@@ -3,6 +3,7 @@ cmake_policy(SET CMP0054 OLD)
 cmake_policy(SET CMP0045 OLD)
 
 project(librl C)
+add_subdirectory(vendor/libft)
 get_directory_property(librl_PARENT PARENT_DIRECTORY)
 
 set(BUILD_SHARED_LIBS OFF)

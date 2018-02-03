@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = librl
+NAME = libft
 CC = gcc
 CFLAGS = -Werror -Wextra -Wall
 RCFLAGS = $(CFLAGS) -O3
@@ -22,7 +22,6 @@ OBJ_PATH = ./obj/
 ROBJ_PATH = $(OBJ_PATH)rel/
 DOBJ_PATH = $(OBJ_PATH)dev/
 SOBJ_PATH = $(OBJ_PATH)san/
-3TH_PATH = ./vendor/libft/
 INC_PATH = ./include/ $(addprefix $(3TH_PATH), include/)
 LNK_PATH = ./ $(3TH_PATH)
 
@@ -31,14 +30,28 @@ R3TH_NAME =
 D3TH_NAME = $(addsuffix .dev, $(R3TH_NAME))
 S3TH_NAME = $(addsuffix .san, $(R3TH_NAME))
 SRC_NAME = \
-	edit.c edit/ctrl.c edit/hist.c edit/insert.c edit/move.c edit/print.c \
-	edit/return.c edit/ln.c edit/utf8.c \
-	hist.c hist/load.c hist/save.c \
-	hook.c \
-	read.c read/notty.c read/tty.c \
-	screen.c \
-	visual.c \
-	signal.c
+	cty/cty.c cty/cty_2.c cty/cty_3.c \
+	ds/alloc.c ds/apd.c ds/at.c ds/aver.c ds/back.c ds/begin.c ds/clean.c \
+	ds/clr.c ds/cpush.c ds/cput.c ds/ctor.c ds/cusht.c ds/dtor.c ds/emp.c \
+	ds/end.c ds/grow.c ds/len.c ds/mpush.c ds/mput.c ds/musht.c ds/npop.c \
+	ds/npush.c ds/nput.c ds/nrem.c ds/nsht.c ds/nusht.c ds/pop.c ds/prd.c \
+	ds/push.c ds/put.c ds/rem.c ds/sht.c ds/usht.c ds/mdtor.c ds/map.c \
+	ds/map_2.c ds/set.c ds/set_2.c \
+	ex/ex.c ex/ex_2.c \
+	fs/fs.c fs/fs_2.c fs/fs_3.c fs/fs_4.c \
+	hash/hash.c hash/hash_2.c \
+	int/len.c int/str.c \
+	io/fcntl.c io/ifs.c io/ifs_2.c io/ofs.c io/ofs_2.c io/ofs_3.c io/padn.c \
+	io/putc.c io/putf.c io/putl.c io/putn.c io/puts.c \
+	lib/atoi.c lib/clean.c lib/dtor.c lib/getenv.c lib/itoa.c lib/join.c \
+	lib/strerr.c \
+	math/imax.c math/imin.c math/m4.c math/m4_mul.c math/m4_rot.c \
+	math/m4_trans.c math/pow.c math/pow2_next.c math/umax.c math/umin.c \
+	math/v3.c math/v3_2.c math/eq.c math/eq_2.c \
+	mem/alloc.c \
+	str/mem.c str/mem_2.c str/str.c str/str_2.c str/str_3.c str/str_4.c \
+	str/str_5.c \
+	get_opt/getoptlong.c get_opt/getoptlonglong.c get_opt/getopt.c \
 
 SRC = $(addprefix $(SRC_PATH), $(SRC_NAME))
 ROBJ = $(addprefix $(ROBJ_PATH), $(OBJ_NAME))
